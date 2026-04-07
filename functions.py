@@ -2,12 +2,14 @@ import requests
 from api_key import API_KEY
 from Player import Player
 
+def checksApiKey():
+    if(API_KEY==None):
+        print("Api key missing")
+        exit()
+
 #Checks if the player exists and then return the Object Player
 def searchPlayer(playerName, playerTag):
     req = requests.get("https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{name}/{tag}?api_key={api}".format(name=playerName,tag=playerTag,api=API_KEY))
-    print("https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{name}/{tag}?api_key={api}".format(name=playerName,tag=playerTag,api=API_KEY))
-    print("ok")
-    print(req.status_code)
     if(req.status_code==200):
         content = req.json()
         puuid=content["puuid"]
@@ -19,10 +21,9 @@ def searchPlayer(playerName, playerTag):
 
 
 
-def searchPlayerMatches(puuid):
+def searchPlayerMatches(puuid:Player):
     
     req = requests.get("https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/{playerPuuid}/ids?start=0&count=10&api_key={api}".format(playerPuuid=puuid,api=API_KEY))
-    print("https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/{playerPuuid}/ids?start=0&count=10&api_key={api}".format(playerPuuid=puuid,api=API_KEY))
     idMatches = req.json()
     return idMatches
 
