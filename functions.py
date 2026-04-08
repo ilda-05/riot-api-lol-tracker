@@ -20,13 +20,14 @@ def searchPlayer(playerName, playerTag):
         print("Player not found")
 
 
-
+# Search the id of last 10 games of the player
 def searchPlayerMatches(puuid:Player):
     
     req = requests.get("https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/{playerPuuid}/ids?start=0&count=10&api_key={api}".format(playerPuuid=puuid,api=API_KEY))
     idMatches = req.json()
     return idMatches
 
+# Gets the details of a list of games
 def matchesInfo(games,player):
 
     stat_games = []
